@@ -2,21 +2,20 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Stack;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class BFSVisualization extends JFrame {
+public class DFSVisualization extends JFrame {
 
     public static final int WIDTH = 600;
     public static final int HEIGHT = 600;
 
     private VisualizationPanel panel;
 
-    public BFSVisualization() {
-        setTitle("Breadth-first Search Visualization");
+    public DFSVisualization() {
+        setTitle("Depth-first Search Visualization");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -30,7 +29,7 @@ public class BFSVisualization extends JFrame {
 
         private Vertex[] vertexList;
         private ArrayList<ArrayList<Integer>> adjacencyList;
-        private Queue<Integer> bfsQueue;
+        private Stack<Integer> dfsStack;
         private int[] visited;
 
         public VisualizationPanel() {
@@ -41,16 +40,16 @@ public class BFSVisualization extends JFrame {
             this.adjacencyList = adjacencyList;
             int numVertices = adjacencyList.size();
             vertexList = new Vertex[numVertices];
-            bfsQueue = new LinkedList<>();
+            dfsStack = new Stack<>();
             visited = new int[numVertices];
             for (int i = 0; i < numVertices; i++) {
                 vertexList[i] = new Vertex(i);
             }
-            bfs(0);
+            dfs(0); // Start from vertex 0
         }
 
-        public void bfs(int startVertex) {
-            bfsQueue.add(startVertex);
+        public void dfs(int startVertex) {
+            dfsStack.push(startVertex);
             visited[startVertex] = 1;
             vertexList[startVertex].setVisited(true);
             panel.repaint();
@@ -59,12 +58,12 @@ public class BFSVisualization extends JFrame {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            while (!bfsQueue.isEmpty()) {
-                int node = bfsQueue.remove();
+            while (!dfsStack.isEmpty()) {
+                int node = dfsStack.pop();
                 for (int i = 0; i < adjacencyList.get(node).size(); i++) {
                     int nextNode = adjacencyList.get(node).get(i);
                     if (visited[nextNode] == 0) {
-                        bfsQueue.add(nextNode);
+                        dfsStack.push(nextNode);
                         visited[nextNode] = 1;
                         vertexList[nextNode].setVisited(true);
                     }
@@ -112,7 +111,6 @@ public class BFSVisualization extends JFrame {
                 }
             }
         }
-
     }
 
     private class Vertex {
@@ -170,8 +168,8 @@ public class BFSVisualization extends JFrame {
 
         adjList.add(new ArrayList<Integer>() {{add(5); add(9);}});
         adjList.add(new ArrayList<Integer>() {{add(8);}});
-        BFSVisualization bfsViz = new BFSVisualization();
-        bfsViz.panel.createGraph(adjList);
-    }
 
+        DFSVisualization dfsViz = new DFSVisualization();
+        dfsViz.panel.createGraph(adjList);
+    }
 }
