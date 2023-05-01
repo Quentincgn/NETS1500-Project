@@ -1,6 +1,5 @@
 /*****
  * name: Patricia Columbia-Walsh & Quentin Cognon
- * pennKey: pcwalsh
  ******/
 
 import java.util.LinkedList;
@@ -12,7 +11,6 @@ public class BFS {
     private boolean[] discovered;
     private int numV;
     private int start;
-    private int end;
     private LinkedList<Integer> adjacencyList[];
     private Queue<Integer> queue;
 
@@ -20,13 +18,12 @@ public class BFS {
     /**
      * Constructor: This creates a new instance of a BFS object.
      */
-    public BFS(LinkedList<Integer> adjacencyList[], int start, int end) {
+    public BFS(LinkedList<Integer> adjacencyList[], int start) {
         this.queue = new LinkedList<> ();
         this.adjacencyList = adjacencyList;
         this.numV = adjacencyList.length;
         this.discovered = new boolean[numV];
         this.start =  start;
-        this.end = end;
     }
 
     /**
