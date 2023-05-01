@@ -1,5 +1,5 @@
 /*****
- * name: Patricia Columbia-Walsh
+ * name: Patricia Columbia-Walsh & Quentin Cognon
  * pennKey: pcwalsh
  ******/
 
@@ -36,6 +36,8 @@ public class BFS {
      * BFS starts at a source node and traverses all the nodes at that frontier before moving on.
      */
     public void bfs() {
+
+
         // distance variable to keep track of frontiers
         int[] dist = new int[numV];
 
@@ -44,29 +46,34 @@ public class BFS {
         discovered[start] = true;
         queue.add(start);
 
+        while (!allDiscovered()) {
 
-        // while the queue is not empty remove the top item
-        while (!queue.isEmpty()) {
-            curr = queue.remove();
+            // while the queue is not empty remove the top item
+            while (!queue.isEmpty()) {
+                curr = queue.remove();
 
-            // find all the neighbors of current node and add them to queue and discovered
-            Iterator<Integer> i = adjacencyList[curr].listIterator();
-            while (i.hasNext()) {
-                int j = i.next();
-                if (!discovered[j]) {
-                    queue.add(j);
-                    discovered[j] = true;
+                // find all the neighbors of current node and add them to queue and discovered
+                Iterator<Integer> i = adjacencyList[curr].listIterator();
+                while (i.hasNext()) {
+                    int j = i.next();
+                    if (!discovered[j]) {
+                        queue.add(j);
+                        discovered[j] = true;
 
-                    // update frontier tracker
-                    dist[j] = dist[curr] + 1;
+                        // update frontier tracker
+                        dist[j] = dist[curr] + 1;
+                    }
                 }
             }
+
+            // pick a new node if BFS finishes on component
+            for (int i = 0; i < discovered.length; i++) {
+                if (!discovered[i]) {
+                    curr = i;
+                }
+            }
+
         }
-
-        // BFS check questions
-        System.out.println("# of frontiers start to end is " + dist[end]);
-        System.out.println(allDiscovered() + " all nodes are discovered");
-
     }
 
     public boolean allDiscovered() {
