@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Stack;
 
 import javax.swing.JFrame;
@@ -49,25 +50,28 @@ public class DFSVisualization extends JFrame {
         }
 
         public void dfs(int startVertex) {
+            int curr = 0;
             dfsStack.push(startVertex);
             visited[startVertex] = 1;
             vertexList[startVertex].setVisited(true);
             panel.repaint();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(4000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             while (!dfsStack.isEmpty()) {
-                int node = dfsStack.pop();
-                for (int i = 0; i < adjacencyList.get(node).size(); i++) {
-                    int nextNode = adjacencyList.get(node).get(i);
-                    if (visited[nextNode] == 0) {
-                        dfsStack.push(nextNode);
-                        visited[nextNode] = 1;
-                        vertexList[nextNode].setVisited(true);
+                curr = dfsStack.pop();
+                    // find neighbors and add them to the stack
+                    Iterator<Integer> i = adjacencyList.get(curr).listIterator();
+                    while (i.hasNext()) {
+                        int j = i.next();
+                        if (visited[j] == 0) {
+                            dfsStack.push(j);
+                            visited[j] = 1;
+                            vertexList[j].setVisited(true);
+                        }
                     }
-                }
                 panel.repaint();
                 try {
                     Thread.sleep(1000);
