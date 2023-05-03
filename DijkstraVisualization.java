@@ -24,7 +24,11 @@ public class DijkstraVisualization extends JFrame {
         setVisible(true);
     }
 
-    private class VisualizationPanel extends JPanel {
+    public VisualizationPanel getPanel() {
+        return panel;
+    }
+
+    public class VisualizationPanel extends JPanel {
 
         private List<List<Vertex>> graph;
 
@@ -154,5 +158,4 @@ public class DijkstraVisualization extends JFrame {
         DijkstraVisualization dijkstraVisualization= new DijkstraVisualization();
         dijkstraVisualization.panel.createGraph(graph, numN, vertexList);
     }
-
 }

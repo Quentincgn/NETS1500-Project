@@ -59,5 +59,4 @@ public class TopologicalSort {
         List<Integer> topologicalSort = ts.getTopologicalSort();
         System.out.println(topologicalSort);
     }
-
 }

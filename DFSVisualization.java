@@ -27,7 +27,10 @@ public class DFSVisualization extends JFrame {
         setVisible(true);
     }
 
-    private class VisualizationPanel extends JPanel {
+    public VisualizationPanel getPanel() {
+        return panel;
+    }
+    public class VisualizationPanel extends JPanel {
 
         private Vertex[] vertexList;
         private ArrayList<ArrayList<Integer>> adjacencyList;

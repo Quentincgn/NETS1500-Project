@@ -11,6 +11,11 @@ public class Vertex {
         this.distance = distance;
     }
 
+    public Vertex(int label) {
+        this.label = label;
+        visited = false;
+    }
+
     public boolean isVisited() {
         return visited;
     }
