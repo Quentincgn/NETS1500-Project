@@ -8,9 +8,9 @@ import java.util.Stack;
 
 public class DFS {
     // class variables
-    private boolean[] discovered;
+    private boolean[] visited;
     private int numV;
-    private int start;
+    private int startVertex;
     private LinkedList<Integer> adjacencyList[];
     private Stack<Integer> stack;
 
@@ -22,8 +22,8 @@ public class DFS {
         this.stack = new Stack<>();
         this.adjacencyList = adjacencyList;
         this.numV = adjacencyList.length;
-        this.discovered = new boolean[numV];
-        this.start = start;
+        this.visited = new boolean[numV];
+        this.startVertex = startVertex;
 
     }
     /**
@@ -36,8 +36,8 @@ public class DFS {
     public void dfs() {
         // create current node and add start to discovered and stack
         int curr = 0;
-        discovered[start] = true;
-        stack.push(start);
+        visited[startVertex] = true;
+        stack.push(startVertex);
 
         while (!allDiscovered()) {
 
@@ -49,16 +49,17 @@ public class DFS {
                 Iterator<Integer> i = adjacencyList[curr].listIterator();
                 while (i.hasNext()) {
                     int j = i.next();
-                    if (!discovered[j]) {
+                    if (visited[j] == false) {
                         stack.push(j);
-                        discovered[j] = true;
+                        visited[j] = true;
+                        //vertexList[nextNode].setVisited(true);
                     }
                 }
             }
 
             // pick a new node if DFS finishes on component
-            for (int i = 0; i < discovered.length; i++) {
-                if (!discovered[i]) {
+            for (int i = 0; i < visited.length; i++) {
+                if (!visited[i]) {
                     curr = i;
                 }
             }
@@ -66,8 +67,8 @@ public class DFS {
     }
 
     public boolean allDiscovered() {
-        for (int i = 0; i < discovered.length; i++) {
-            if (!discovered[i]) {
+        for (int i = 0; i < visited.length; i++) {
+            if (!visited[i]) {
                 return false;
             }
         }
