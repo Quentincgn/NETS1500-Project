@@ -32,7 +32,7 @@ public class BFSVisualization extends JFrame {
         private Vertex[] vertexList;
         private ArrayList<ArrayList<Integer>> adjacencyList;
         private Queue<Integer> bfsQueue;
-        private boolean[] visited;
+        private LinkedList<Integer> visited;
 
         private int numVertices;
 
@@ -45,7 +45,7 @@ public class BFSVisualization extends JFrame {
             numVertices = adjacencyList.size();
             vertexList = new Vertex[numVertices];
             bfsQueue = new LinkedList<>();
-            visited = new boolean[numVertices];
+            visited = new LinkedList<Integer>();
             for (int i = 0; i < numVertices; i++) {
                 vertexList[i] = new Vertex(i);
             }
@@ -55,7 +55,7 @@ public class BFSVisualization extends JFrame {
         public void bfs(int startVertex) {
             // create current node and add start to discovered and queue
             int curr = startVertex;
-            visited[startVertex] = true;
+            visited.add(startVertex);
             vertexList[startVertex].setVisited(true);
             bfsQueue.add(startVertex);
             panel.repaint();
@@ -71,15 +71,15 @@ public class BFSVisualization extends JFrame {
                 Iterator<Integer> i = adjacencyList.get(curr).listIterator();
                 while (i.hasNext()) {
                     int j = i.next();
-                    if (!visited[j]) {
+                    if (!visited.contains(j)) {
                         bfsQueue.add(j);
-                        visited[j] = true;
+                        visited.add(j);
                         vertexList[j].setVisited(true);
                     }
                 }
                 panel.repaint();
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(4000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -95,7 +95,7 @@ public class BFSVisualization extends JFrame {
             int radius = Math.min(centerX, centerY) - diameter; // adjust radius here
 
             for (int i = 0; i < vertexList.length; i++) {
-                if (visited[i] == true) {
+                if (visited.contains(i)) {
                     g.setColor(Color.GREEN);
                 } else {
                     g.setColor(Color.BLACK);
@@ -108,6 +108,10 @@ public class BFSVisualization extends JFrame {
                 g.setColor(Color.WHITE);
                 g.drawString("" + vertexList[i].getLabel(), x + diameter / 2, y + diameter / 2);
             }
+            g.setColor(Color.BLACK);
+            g.setFont(g.getFont().deriveFont(20.0f));
+            g.drawString("Discovered nodes: " + visited , 10, 20);
+            g.drawString("Queue: " + bfsQueue, 10, 40);
 
             // Draw edges
             g.setColor(Color.BLACK);
