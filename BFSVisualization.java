@@ -93,6 +93,7 @@ public class BFSVisualization extends JFrame {
             int centerX = getWidth() / 2;
             int centerY = getHeight() / 2;
             int radius = Math.min(centerX, centerY) - diameter; // adjust radius here
+            g.setFont(g.getFont().deriveFont(20.0f));
 
             for (int i = 0; i < vertexList.length; i++) {
                 if (visited.contains(i)) {

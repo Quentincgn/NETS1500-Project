@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Stack;
 
 import javax.swing.JFrame;
@@ -31,7 +32,7 @@ public class DFSVisualization extends JFrame {
         private Vertex[] vertexList;
         private ArrayList<ArrayList<Integer>> adjacencyList;
         private Stack<Integer> dfsStack;
-        private int[] visited;
+        private LinkedList<Integer> visited;
 
         public VisualizationPanel() {
             setBackground(Color.WHITE);
@@ -42,7 +43,7 @@ public class DFSVisualization extends JFrame {
             int numVertices = adjacencyList.size();
             vertexList = new Vertex[numVertices];
             dfsStack = new Stack<>();
-            visited = new int[numVertices];
+            visited = new LinkedList<Integer>();
             for (int i = 0; i < numVertices; i++) {
                 vertexList[i] = new Vertex(i);
             }
@@ -52,7 +53,7 @@ public class DFSVisualization extends JFrame {
         public void dfs(int startVertex) {
             int curr = 0;
             dfsStack.push(startVertex);
-            visited[startVertex] = 1;
+            visited.add(startVertex);
             vertexList[startVertex].setVisited(true);
             panel.repaint();
             try {
@@ -66,15 +67,15 @@ public class DFSVisualization extends JFrame {
                     Iterator<Integer> i = adjacencyList.get(curr).listIterator();
                     while (i.hasNext()) {
                         int j = i.next();
-                        if (visited[j] == 0) {
+                        if (!visited.contains(j)) {
                             dfsStack.push(j);
-                            visited[j] = 1;
+                            visited.add(j);
                             vertexList[j].setVisited(true);
                         }
                     }
                 panel.repaint();
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(4000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -88,6 +89,7 @@ public class DFSVisualization extends JFrame {
             int centerX = getWidth() / 2;
             int centerY = getHeight() / 2;
             int radius = Math.min(centerX, centerY) - diameter; // adjust radius here
+            g.setFont(g.getFont().deriveFont(20.0f));
 
             for (int i = 0; i < vertexList.length; i++) {
                 if (vertexList[i].isVisited()) {
@@ -103,6 +105,10 @@ public class DFSVisualization extends JFrame {
                 g.setColor(Color.WHITE);
                 g.drawString("" + vertexList[i].getLabel(), x + diameter / 2, y + diameter / 2);
             }
+            g.setColor(Color.BLACK);
+            g.setFont(g.getFont().deriveFont(20.0f));
+            g.drawString("Discovered nodes: " + visited , 10, 20);
+            g.drawString("Stack: " + dfsStack, 10, 40);
 
             // Draw edges
             g.setColor(Color.BLACK);
