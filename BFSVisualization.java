@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -31,7 +32,9 @@ public class BFSVisualization extends JFrame {
         private Vertex[] vertexList;
         private ArrayList<ArrayList<Integer>> adjacencyList;
         private Queue<Integer> bfsQueue;
-        private int[] visited;
+        private boolean[] visited;
+
+        private int numVertices;
 
         public VisualizationPanel() {
             setBackground(Color.WHITE);
@@ -39,10 +42,10 @@ public class BFSVisualization extends JFrame {
 
         public void createGraph(ArrayList<ArrayList<Integer>> adjacencyList) {
             this.adjacencyList = adjacencyList;
-            int numVertices = adjacencyList.size();
+            numVertices = adjacencyList.size();
             vertexList = new Vertex[numVertices];
             bfsQueue = new LinkedList<>();
-            visited = new int[numVertices];
+            visited = new boolean[numVertices];
             for (int i = 0; i < numVertices; i++) {
                 vertexList[i] = new Vertex(i);
             }
@@ -50,23 +53,28 @@ public class BFSVisualization extends JFrame {
         }
 
         public void bfs(int startVertex) {
-            bfsQueue.add(startVertex);
-            visited[startVertex] = 1;
+            // create current node and add start to discovered and queue
+            int curr = startVertex;
+            visited[startVertex] = true;
             vertexList[startVertex].setVisited(true);
+            bfsQueue.add(startVertex);
             panel.repaint();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            // while the queue is not empty remove the top item
             while (!bfsQueue.isEmpty()) {
-                int node = bfsQueue.remove();
-                for (int i = 0; i < adjacencyList.get(node).size(); i++) {
-                    int nextNode = adjacencyList.get(node).get(i);
-                    if (visited[nextNode] == 0) {
-                        bfsQueue.add(nextNode);
-                        visited[nextNode] = 1;
-                        vertexList[nextNode].setVisited(true);
+                curr = bfsQueue.remove();
+                Iterator<Integer> i = adjacencyList.get(curr).listIterator();
+                while (i.hasNext()) {
+                    int j = i.next();
+                    if (!visited[j]) {
+                        bfsQueue.add(j);
+                        visited[j] = true;
+                        vertexList[j].setVisited(true);
                     }
                 }
                 panel.repaint();
@@ -87,13 +95,13 @@ public class BFSVisualization extends JFrame {
             int radius = Math.min(centerX, centerY) - diameter; // adjust radius here
 
             for (int i = 0; i < vertexList.length; i++) {
-                if (vertexList[i].isVisited()) {
+                if (visited[i] == true) {
                     g.setColor(Color.GREEN);
                 } else {
                     g.setColor(Color.BLACK);
                 }
-                x = (int) (centerX + radius * Math.cos(i * 2 * Math.PI / vertexList.length));
-                y = (int) (centerY + radius * Math.sin(i * 2 * Math.PI / vertexList.length));
+                x = (int) (centerX + radius * Math.cos(i * 2 * Math.PI / numVertices));
+                y = (int) (centerY + radius * Math.sin(i * 2 * Math.PI / numVertices));
                 vertexList[i].setX(x);
                 vertexList[i].setY(y);
                 g.fillOval(x, y, diameter, diameter);
