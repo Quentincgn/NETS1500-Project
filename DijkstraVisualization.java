@@ -160,3 +160,12 @@ public class DijkstraVisualization extends JFrame {
         dijkstraVisualization.panel.createGraph(graph, numN, vertexList);
     }
 }
+class Node {
+    int node;
+    int distance;
+
+    public Node(int node, int distance) {
+        this.node = node;
+        this.distance = distance;
+    }
+}
