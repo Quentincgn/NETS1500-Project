@@ -41,6 +41,10 @@ public class DFSVisualization extends JFrame {
             setBackground(Color.WHITE);
         }
 
+        /**
+         * Creates the graph and starts the DFS algorithm
+         * @param adjacencyList
+         */
         public void createGraph(ArrayList<ArrayList<Integer>> adjacencyList) {
             this.adjacencyList = adjacencyList;
             int numVertices = adjacencyList.size();
@@ -53,7 +57,12 @@ public class DFSVisualization extends JFrame {
             dfs(0); // Start from vertex 0
         }
 
+        /**
+         * Depth-first search algorithm
+         * @param startVertex
+         */
         public void dfs(int startVertex) {
+            // create current node and add start to discovered and stack
             int curr = 0;
             dfsStack.push(startVertex);
             visited.add(startVertex);
@@ -64,6 +73,7 @@ public class DFSVisualization extends JFrame {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            // while stack is not empty remove the top item
             while (!dfsStack.isEmpty()) {
                 curr = dfsStack.pop();
                     // find neighbors and add them to the stack
@@ -85,6 +95,9 @@ public class DFSVisualization extends JFrame {
             }
         }
 
+        /**
+         * Paints the graph
+         */
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             int diameter = 40;
