@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("What is the algorithm you want to visualize?");
 
-        System.out.println("Do you want to use the default graph? (Y/N)\n");
+        System.out.println("Do you want to use the default graph (Y) or try your own graph (N)?\n");
         Scanner scanner = new Scanner(System.in);
         String example = scanner.nextLine();
         if (example.equals("Y") || example.equals("y")) {

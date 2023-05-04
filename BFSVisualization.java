@@ -44,6 +44,10 @@ public class BFSVisualization extends JFrame {
             setBackground(Color.WHITE);
         }
 
+        /**
+         * Creates the graph and all elements needed and runs the BFS algorithm
+         * @param adjacencyList
+         */
         public void createGraph(ArrayList<ArrayList<Integer>> adjacencyList) {
             this.adjacencyList = adjacencyList;
             numVertices = adjacencyList.size();
@@ -56,6 +60,10 @@ public class BFSVisualization extends JFrame {
             bfs(0);
         }
 
+        /**
+         * Runs the BFS algorithm
+         * @param startVertex
+         */
         public void bfs(int startVertex) {
             // create current node and add start to discovered and queue
             int curr = startVertex;
@@ -90,6 +98,9 @@ public class BFSVisualization extends JFrame {
             }
         }
 
+        /**
+         * Paints the graph
+         */
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             int diameter = 40;
@@ -99,6 +110,7 @@ public class BFSVisualization extends JFrame {
             int radius = Math.min(centerX, centerY) - diameter; // adjust radius here
             g.setFont(g.getFont().deriveFont(20.0f));
 
+            // Draw vertices
             for (int i = 0; i < vertexList.length; i++) {
                 if (visited.contains(i)) {
                     g.setColor(Color.GREEN);
@@ -113,6 +125,8 @@ public class BFSVisualization extends JFrame {
                 g.setColor(Color.WHITE);
                 g.drawString("" + vertexList[i].getLabel(), x + diameter / 2, y + diameter / 2);
             }
+
+            // Draw text
             g.setColor(Color.BLACK);
             g.setFont(g.getFont().deriveFont(20.0f));
             g.drawString("Discovered nodes: " + visited , 10, 20);
