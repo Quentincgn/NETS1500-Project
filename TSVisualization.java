@@ -40,6 +40,7 @@ public class TSVisualization extends JFrame {
             setBackground(Color.WHITE);
         }
 
+        //method to create graph
         public void createGraph(ArrayList<ArrayList<Integer>> adjacencyList, int numV, Vertex[] vertexList) {
             this.numV = numV;
             this.adjacencyList = adjacencyList;
@@ -49,13 +50,13 @@ public class TSVisualization extends JFrame {
             getTopologicalSort();
         }
 
+        // method gets dfs and returns in reverse order
         public void getTopologicalSort() {
             for (int i = 0; i < numV; i++) {
                 if (!discovered[i]) {
                     dfs(i);
                 }
             }
-
             List<Integer> result = new ArrayList<>();
             while (!stack.isEmpty()) {
                 result.add(stack.pop());
@@ -65,6 +66,7 @@ public class TSVisualization extends JFrame {
             g.drawString("Topological Sort: " + result.toString(), 10, 20);
         }
 
+        //Recursive Depth First Search
         private void dfs(int d) {
             discovered[d] = true;
             panel.repaint();
@@ -79,6 +81,7 @@ public class TSVisualization extends JFrame {
                 }
             }
             stack.push(d);
+            System.out.println(d);
         }
 
         public void paintComponent(Graphics g) {

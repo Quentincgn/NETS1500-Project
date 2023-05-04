@@ -41,7 +41,7 @@ public class DijkstraVisualization extends JFrame {
         public VisualizationPanel() {
             setBackground(Color.WHITE);
         }
-
+        // method to create the graph
         public void createGraph(List<List<Vertex>> graph, int numN, Vertex[] vertexList) {
             this.graph = graph;
             this.numN = numN;
@@ -53,9 +53,10 @@ public class DijkstraVisualization extends JFrame {
             dijkstra(0);
         }
 
+        // DIJKSTRAs algorithm using priority queue
         public void dijkstra(int start) {
             dist[start] = 0;
-            pq.offer(new Node(start, 0));
+            pq.add(new Node(start, 0));
             panel.repaint();
             try {
                 Thread.sleep(4000);
@@ -76,7 +77,7 @@ public class DijkstraVisualization extends JFrame {
                         int newDist = dist[curr] + neighbor.getDistance();
                         if (newDist < dist[neighbor.getLabel()]) {
                             dist[neighbor.getLabel()] = newDist;
-                            pq.offer(new Node(neighbor.getLabel(), newDist));
+                            pq.add(new Node(neighbor.getLabel(), newDist));
                         }
                     }
                 }
