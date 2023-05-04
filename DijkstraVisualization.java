@@ -36,7 +36,7 @@ public class DijkstraVisualization extends JFrame {
         private int numN;
         private int[] dist;
         private boolean[] discovered;
-        private PriorityQueue<Node> pq;
+        private PriorityQueue<Vertex> pq;
 
         public VisualizationPanel() {
             setBackground(Color.WHITE);
@@ -49,14 +49,14 @@ public class DijkstraVisualization extends JFrame {
             Arrays.fill(dist, Integer.MAX_VALUE);
             this.discovered = new boolean[numN];
             this.vertexList = vertexList;
-            this.pq = new PriorityQueue<>(numN, Comparator.comparingInt(a -> a.distance));
+            this.pq = new PriorityQueue<>(numN, Comparator.comparingInt(a -> a.getDistance()));
             dijkstra(0);
         }
 
         // DIJKSTRAs algorithm using priority queue
         public void dijkstra(int start) {
             dist[start] = 0;
-            pq.add(new Node(start, 0));
+            pq.add(new Vertex(start, 0));
             panel.repaint();
             try {
                 Thread.sleep(4000);
@@ -64,7 +64,7 @@ public class DijkstraVisualization extends JFrame {
                 e.printStackTrace();
             }
             while (!pq.isEmpty()) {
-                int curr = pq.poll().node;
+                int curr = pq.poll().getLabel();
                 discovered[curr] = true;
                 panel.repaint();
                 try {
@@ -77,7 +77,7 @@ public class DijkstraVisualization extends JFrame {
                         int newDist = dist[curr] + neighbor.getDistance();
                         if (newDist < dist[neighbor.getLabel()]) {
                             dist[neighbor.getLabel()] = newDist;
-                            pq.add(new Node(neighbor.getLabel(), newDist));
+                            pq.add(new Vertex(neighbor.getLabel(), newDist));
                         }
                     }
                 }
@@ -158,14 +158,5 @@ public class DijkstraVisualization extends JFrame {
         }
         DijkstraVisualization dijkstraVisualization= new DijkstraVisualization();
         dijkstraVisualization.panel.createGraph(graph, numN, vertexList);
-    }
-}
-class Node {
-    int node;
-    int distance;
-
-    public Node(int node, int distance) {
-        this.node = node;
-        this.distance = distance;
     }
 }
