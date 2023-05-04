@@ -129,11 +129,17 @@ public class TSVisualization extends JFrame {
             adjacencyList.add(new ArrayList<>());
         }
         adjacencyList.get(5).add(2);
+        adjacencyList.get(2).add(5);
         adjacencyList.get(5).add(0);
+        adjacencyList.get(0).add(5);
         adjacencyList.get(4).add(0);
+        adjacencyList.get(0).add(4);
         adjacencyList.get(4).add(1);
+        adjacencyList.get(1).add(4);
         adjacencyList.get(2).add(3);
+        adjacencyList.get(3).add(2);
         adjacencyList.get(3).add(1);
+        adjacencyList.get(1).add(3);
         tsVisualization.panel.createGraph(adjacencyList, numV, vertexList);
 
     }
