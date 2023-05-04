@@ -19,6 +19,7 @@ BFS - Patricia
 DFS - Patricia
 Dijkstra - Patricia
 Topological sort - Patricia
+Link Algorithms to Visualization - Quentin
 Visualization - Quentin
 
 Changes Made After Proposal:
